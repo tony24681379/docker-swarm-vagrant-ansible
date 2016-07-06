@@ -1,0 +1,28 @@
+---
+- name: install criu
+  hosts: glusterfs
+  sudo: True
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Install criu env when Ubuntu
+      sudo: True
+      apt: pkg={{item}} update_cache=yes
+      with_items:
+        - pkg-config
+        - libseccomp-dev
+        - libpthread-stubs0-dev
+        - protobuf-compiler
+        - libprotobuf-dev
+        - libprotoc-dev
+        - libprotobuf-c-dev
+        - libnl-3-dev
+        - libcap-dev
+        - protobuf-c-compiler
+      when: ansible_distribution == "Ubuntu"
+
+    - name: copy criu binary file
+      copy:
+        src: criu
+        dest: /usr/bin/criu

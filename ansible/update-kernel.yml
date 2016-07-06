@@ -1,0 +1,18 @@
+---
+- name: Update linux kernel
+  hosts: all
+  sudo: True
+
+  tasks:
+    - name: copy kernel to hosts
+      copy:
+        src: kernel
+        dest: /home/vagrant/kernel
+
+    - name: Update linux kernel
+      shell: dpkg -i /home/vagrant/kernel/*.deb
+
+    - name: delete kernel file
+      file:
+        path: /home/vagrant/kernel
+        state: absent

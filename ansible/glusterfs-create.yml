@@ -1,0 +1,26 @@
+---
+- name: create glusterfs volume
+  hosts: glusterfs
+  sudo: yes
+
+  vars_files:
+    - vars.yml
+    
+  tasks:
+    - name: Ensure Gluster brick directories exist.
+      file: "path={{ item }} state=directory mode=0777"
+      with_items:
+        - "{{ gluster_brick_dir }}"
+        - "{{ gluster_brick_name }}"
+
+    - name: Configure Gluster volume.
+      gluster_volume:
+        state: present
+        name: "{{ gluster_brick_name }}"
+        brick: "{{ gluster_brick_dir }}"
+#        stripes: 2
+        replicas: 4
+        cluster: "{{ groups.glusterfs | join(',') }}"
+        host: "{{ inventory_hostname }}"
+        force: yes
+      run_once: true

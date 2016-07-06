@@ -1,0 +1,15 @@
+---
+- name: install glusterfs
+  hosts: glusterfs
+  sudo: True
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Install glusterfs env when Ubuntu
+      sudo: True
+      apt: pkg={{item}} update_cache=yes
+      with_items:
+        - glusterfs-server
+        - attr
+      when: ansible_distribution == "Ubuntu"

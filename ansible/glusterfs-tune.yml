@@ -1,0 +1,15 @@
+---
+- name: tune glusterfs volume
+  hosts: glusterfs
+  sudo: yes
+
+  vars_files:
+    - vars.yml
+    
+  tasks:
+    - name: Tune Gluster volume.
+      gluster_volume:
+        state: present
+        name: "{{ gluster_brick_name }}"
+        options: {performance.cache-size: 256MB}
+      run_once: true

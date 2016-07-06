@@ -1,0 +1,14 @@
+ ---
+- name: Add mappings to /etc/hosts
+  hosts: glusterfs
+  sudo: yes
+
+  vars_files:
+    - vars.yml
+    
+  tasks:
+     - name: Add mappings to /etc/hosts
+      lineinfile:
+        dest: /etc/hosts
+        line: 
+          '192.168.33.11 node1\n192.168.33.12 node2\n192.168.33.13 node3\n192.168.33.14 node4\n'

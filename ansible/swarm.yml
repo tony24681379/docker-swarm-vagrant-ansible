@@ -1,0 +1,12 @@
+---
+- name: run swarm node
+  hosts: glusterfs
+  sudo: yes
+
+  tasks:
+    - name: debug infrastructure
+      # access container data : print the state
+      debug: var={{ansible_eth1.ipv4.address}}
+
+    - name: run swarm node
+      command: docker run --name {{inventory_hostname}}_swarm -d tony24681379/swarm join --heartbeat "5s" --advertise={{ansible_eth1.ipv4.address}}:2375 consul://140.114.77.122:8500

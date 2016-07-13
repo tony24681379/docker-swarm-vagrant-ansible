@@ -1,0 +1,21 @@
+---
+- name: install docker
+  hosts: glusterfs
+  sudo: True
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: stop docker service
+      service: state=stopped name=docker
+
+    - name: copy docker binary file
+      copy:
+        src: docker-1.10.3
+        dest: /usr/bin/docker
+
+    - name: enable systemd
+      service:
+        name: docker.service
+        enabled: yes
+        state: started

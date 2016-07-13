@@ -16,7 +16,11 @@ firewall_allowed_tcp_ports:
   - 38466
 firewall_allowed_udp_ports:
   - 111
-  
+
+gluster_mount_dir: /var/lib/docker/checkpoint
+
 gluster_brick_name: checkpoint
-gluster_brick_dir: /var/lib/docker/checkpoint
-gluster_mount_dir: /home/vagrant/checkpoint
+gluster_brick_dir: /home/vagrant/checkpoint
+
+gluster_brick_tmpfs_name: checkpoint-tmpfs
+gluster_brick_tmpfs_dir: /tmp

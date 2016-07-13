@@ -10,7 +10,6 @@
       file: "path={{ item }} state=directory mode=0777"
       with_items:
         - "{{ gluster_mount_dir }}"
-        - "{{ gluster_brick_name }}"
 
     - name: Ensure Gluster volume is mounted.
       sudo: True

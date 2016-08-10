@@ -1,0 +1,28 @@
+---
+- name: install docker
+  hosts: swarm
+  sudo: True
+
+  tasks:
+    - name: stop docker service
+      service: state=stopped name=docker
+
+    - name: insert /etc/default/docker
+      lineinfile:
+          create: yes
+          dest: /etc/default/docker
+          line: DOCKER_OPTS="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
+
+    - name: copy docker binary file
+      copy:
+        src: docker.service.d
+        dest: /etc/systemd/system
+
+    - name: update systemd-daemon
+      command: systemctl daemon-reload
+
+    - name: enable systemd
+      service:
+        name: docker.service
+        enabled: yes
+        state: started

@@ -1,0 +1,63 @@
+---
+- name: install docker
+  hosts: swarm
+  sudo: True
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Install docker when Ubuntu
+      sudo: True
+      apt: pkg={{item}} update_cache=yes
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+      when: ansible_distribution == "Ubuntu"
+
+    - apt_key: keyserver=hkp://p80.pool.sks-keyservers.net:80 id=58118E89F3A912897C070ADBF76221572C52609D
+      sudo: True
+
+    - name: insert /etc/apt/sources.list.d/docker.list
+      sudo: True
+      lineinfile:
+        create: yes
+        dest: /etc/apt/sources.list.d/docker.list
+        line: deb https://apt.dockerproject.org/repo ubuntu-wily main
+
+    - name: Install docker 1.10.3 when Ubuntu
+      sudo: True
+      apt: name=docker-engine=1.10.3-0~wily update_cache=yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: stop docker service
+      service: state=stopped name=docker
+
+    - name: copy docker binary file
+      copy:
+        src: docker-1.10.3
+        dest: /usr/bin/docker
+
+    - name: copy criu binary file
+      copy:
+        src: criu
+        dest: /usr/bin/criu
+
+    - name: insert /etc/default/docker
+      lineinfile:
+          create: yes
+          dest: /etc/default/docker
+          line: DOCKER_OPTS="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
+
+    - name: copy docker binary file
+      copy:
+        src: docker.service.d
+        dest: /etc/systemd/system
+
+    - name: update systemd-daemon
+      command: systemctl daemon-reload
+
+    - name: enable systemd
+      service:
+        name: docker.service
+        enabled: yes
+        state: started

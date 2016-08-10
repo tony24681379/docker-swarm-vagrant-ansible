@@ -1,6 +1,6 @@
  ---
 - name: Add mappings to /etc/hosts
-  hosts: glusterfs
+  hosts: swarm
   sudo: yes
 
   vars_files:

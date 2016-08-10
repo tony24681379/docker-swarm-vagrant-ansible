@@ -1,6 +1,6 @@
 ---
 - name: run swarm node
-  hosts: glusterfs
+  hosts: swarm
   sudo: yes
   vars_files:
     - vars.yml

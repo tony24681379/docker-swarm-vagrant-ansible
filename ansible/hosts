@@ -16,7 +16,7 @@ node4 ansible_ssh_host=192.168.33.14
 # 針對不同的平台可能 key 以及使用者不一樣可以額外指定
 
 # 也可以用群組的方式
-[glusterfs]
+[swarm]
 node1
 node2
 node3

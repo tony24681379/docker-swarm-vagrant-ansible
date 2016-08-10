@@ -1,6 +1,6 @@
 ---
 - name:  mount tmpfs as /tmp
-  hosts: glusterfs
+  hosts: swarm
   sudo: yes
 
   vars_files:

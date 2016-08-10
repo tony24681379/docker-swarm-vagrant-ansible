@@ -1,6 +1,6 @@
 ---
 - name: tune glusterfs volume
-  hosts: glusterfs
+  hosts: swarm
   sudo: yes
 
   vars_files:

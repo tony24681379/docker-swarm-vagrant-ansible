@@ -24,3 +24,5 @@ gluster_brick_dir: /home/vagrant/checkpoint
 
 gluster_brick_tmpfs_name: checkpoint-tmpfs
 gluster_brick_tmpfs_dir: /tmp
+
+host_swarm_ip: 140.114.77.122

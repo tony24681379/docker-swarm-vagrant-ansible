@@ -1,6 +1,6 @@
 ---
 - name: install glusterfs
-  hosts: glusterfs
+  hosts: swarm
   sudo: True
   vars_files:
     - vars.yml

@@ -1,6 +1,6 @@
 ---
 - name: install docker
-  hosts: glusterfs
+  hosts: swarm
   sudo: True
   vars_files:
     - vars.yml
